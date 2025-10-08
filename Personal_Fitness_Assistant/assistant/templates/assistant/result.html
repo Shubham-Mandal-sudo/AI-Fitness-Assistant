@@ -1,0 +1,56 @@
+{% extends 'assistant/base.html' %}
+
+{% block content %}
+<div class="result-container">
+    <div class="result-header">
+        <h2>Your Personalized Fitness Plan</h2>
+        <div class="header-actions">
+            <a href="{% url 'download_pdf' assessment.id %}" class="download-btn" target="_blank">
+                📄 Download PDF
+            </a>
+            <a href="{% url 'index' %}" class="back-btn">New Assessment</a>
+        </div>
+    </div>
+    
+    <div class="user-summary">
+        <h3>Your Profile Summary</h3>
+        <div class="summary-grid">
+            <div class="summary-item">
+                <span class="label">BMI:</span>
+                <span class="value">{{ bmi|floatformat:1 }}</span>
+            </div>
+            <div class="summary-item">
+                <span class="label">Age:</span>
+                <span class="value">{{ assessment.age }} years</span>
+            </div>
+            <div class="summary-item">
+                <span class="label">Weight:</span>
+                <span class="value">{{ assessment.weight }} kg</span>
+            </div>
+            <div class="summary-item">
+                <span class="label">Height:</span>
+                <span class="value">{{ assessment.height }} cm</span>
+            </div>
+            {% if assessment.food_preference != 'ANY' %}
+            <div class="summary-item">
+                <span class="label">Food Preference:</span>
+                <span class="value">{{ assessment.get_food_preference_display }}</span>
+            </div>
+            {% endif %}
+            {% if assessment.workout_place != 'ANY' %}
+            <div class="summary-item">
+                <span class="label">Workout Place:</span>
+                <span class="value">{{ assessment.get_workout_place_display }}</span>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    
+    <div class="ai-response">
+        <h3>Your Custom Plan</h3>
+        <div class="response-content">
+            {{ assessment.ai_response|safe|linebreaks }}
+        </div>
+    </div>
+</div>
+{% endblock %}

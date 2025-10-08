@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Fitness Plan - {{ assessment.id }}</title>
+    <style>
+        @page {
+            size: letter;
+            margin: 2cm;
+            @frame footer {
+                -pdf-frame-content: footerContent;
+                bottom: 1cm;
+                margin-left: 2cm;
+                margin-right: 2cm;
+                height: 1cm;
+            }
+        }
+        
+        body {
+            font-family: 'Helvetica', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            font-size: 12px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 20px;
+        }
+        
+        .header h1 {
+            color: #667eea;
+            font-size: 24px;
+            margin: 0;
+        }
+        
+        .header .subtitle {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .section {
+            margin-bottom: 25px;
+            page-break-inside: avoid;
+        }
+        
+        .section h2 {
+            background-color: #667eea;
+            color: white;
+            padding: 8px 12px;
+            font-size: 16px;
+            margin: 0 0 12px 0;
+            border-radius: 4px;
+        }
+        
+        .summary-grid {
+            display: table;
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 15px;
+        }
+        
+        .summary-row {
+            display: table-row;
+        }
+        
+        .summary-item {
+            display: table-cell;
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            background-color: #f8f9fa;
+        }
+        
+        .summary-item.label {
+            font-weight: bold;
+            width: 40%;
+            background-color: #e9ecef;
+        }
+        
+        .ai-response strong {
+            color: #2d3748;
+            font-weight: bold;
+        }
+        
+        .ai-response h1,
+        .ai-response h2,
+        .ai-response h3 {
+            color: #2d3748;
+            margin: 15px 0 10px 0;
+            border-bottom: 1px solid #667eea;
+            padding-bottom: 5px;
+        }
+        
+        .ai-response ul,
+        .ai-response ol {
+            margin: 10px 0 10px 20px;
+        }
+        
+        .ai-response li {
+            margin-bottom: 5px;
+        }
+        
+        .footer {
+            text-align: center;
+            font-size: 10px;
+            color: #666;
+        }
+        
+        .page-break {
+            page-break-before: always;
+        }
+        
+        .generated-date {
+            text-align: right;
+            color: #666;
+            font-size: 10px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="generated-date">Generated on: {{ generated_date }}</div>
+    
+    <div class="header">
+        <h1>AI Fitness Assistant</h1>
+        <div class="subtitle">Your Personalized Fitness Plan</div>
+    </div>
+    
+    <div class="section">
+        <h2>Personal Information</h2>
+        <div class="summary-grid">
+            <div class="summary-row">
+                <div class="summary-item label">Gender</div>
+                <div class="summary-item">{{ assessment.get_gender_display }}</div>
+            </div>
+            <div class="summary-row">
+                <div class="summary-item label">Age</div>
+                <div class="summary-item">{{ assessment.age }} years</div>
+            </div>
+            <div class="summary-row">
+                <div class="summary-item label">Weight</div>
+                <div class="summary-item">{{ assessment.weight }} kg</div>
+            </div>
+            <div class="summary-row">
+                <div class="summary-item label">Height</div>
+                <div class="summary-item">{{ assessment.height }} cm</div>
+            </div>
+            <div class="summary-row">
+                <div class="summary-item label">Waist Circumference</div>
+                <div class="summary-item">{{ assessment.waist_circumference }} cm</div>
+            </div>
+            <div class="summary-row">
+                <div class="summary-item label">BMI</div>
+                <div class="summary-item">{{ bmi|floatformat:1 }}</div>
+            </div>
+            {% if assessment.food_preference != 'ANY' %}
+            <div class="summary-row">
+                <div class="summary-item label">Food Preference</div>
+                <div class="summary-item">{{ assessment.get_food_preference_display }}</div>
+            </div>
+            {% endif %}
+            {% if assessment.workout_place != 'ANY' %}
+            <div class="summary-row">
+                <div class="summary-item label">Workout Preference</div>
+                <div class="summary-item">{{ assessment.get_workout_place_display }}</div>
+            </div>
+            {% endif %}
+            <div class="summary-row">
+                <div class="summary-item label">Health Goal</div>
+                <div class="summary-item">{{ assessment.health_goal }}</div>
+            </div>
+            {% if assessment.duration %}
+            <div class="summary-row">
+                <div class="summary-item label">Duration</div>
+                <div class="summary-item">{{ assessment.duration }} weeks</div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2>Personalized Fitness Plan</h2>
+        <div class="ai-response">
+            {{ assessment.ai_response|safe }}
+        </div>
+    </div>
+    
+    <div id="footerContent" class="footer">
+        Page <pdf:pagenumber> of <pdf:pagecount> | Generated by AI Fitness Assistant
+    </div>
+</body>
+</html>
