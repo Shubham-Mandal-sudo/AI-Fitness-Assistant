@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import JsonResponse, HttpResponse
 from .models import FitnessAssessment
-from Personal_Fitness_Assistant.ai_client import LMStudioClient
+from Personal_Fitness_Assistant.ai_client import GeminiClient  
 from .utils import render_to_pdf, generate_pdf_filename
 import json
 
@@ -21,8 +21,8 @@ def index(request):
                 'workout_place': request.POST.get('workout_place', 'ANY'),
             }
             
-            # Generate AI response
-            ai_client = LMStudioClient()
+            # Generate AI response using Gemini
+            ai_client = GeminiClient()  # Changed to GeminiClient
             ai_response = ai_client.generate_fitness_plan(user_data)
             
             # Save to database

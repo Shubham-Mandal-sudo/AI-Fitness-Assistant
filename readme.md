@@ -116,4 +116,5 @@ python manage.py runserver
 4. Fill out the form and generate a fitness plan
 
 ---
-*Internship Project - [Your Name]*
+*Internship Project - Shubham Mandal*
+*shubhammandal205@gmail.com*
