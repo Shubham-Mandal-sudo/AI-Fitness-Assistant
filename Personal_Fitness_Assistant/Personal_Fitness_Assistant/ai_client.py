@@ -17,8 +17,6 @@ class GeminiClient:
         prompt = self._build_prompt(user_data)
         
         try:
-            # Add delay to respect rate limits (15 RPM free tier)
-            time.sleep(6)
             
             response = self.model.generate_content(
                 prompt,
