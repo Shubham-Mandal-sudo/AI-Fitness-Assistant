@@ -1,13 +1,14 @@
 import google.generativeai as genai
 import os
-from decouple import config
 import time
 import markdown2
 from markdown_it import MarkdownIt
 
 class GeminiClient:
     def __init__(self):
-        self.api_key = config('GEMINI_API_KEY')
+        self.api_key = os.getenv('GEMINI_API_KEY')
+        if not self.api_key:
+            raise ValueError("GEMINI_API_KEY not found in environment variables")
         genai.configure(api_key=self.api_key)
         
         # Use a balanced model - gemini-2.5-flash-lite is free and fast
