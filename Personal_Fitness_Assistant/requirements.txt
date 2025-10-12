@@ -4,4 +4,5 @@ python-dotenv
 xhtml2pdf
 reportlab
 markdown2
+markdown-it-py
 google-generativeai
