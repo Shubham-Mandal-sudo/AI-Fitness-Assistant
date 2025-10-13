@@ -3,6 +3,10 @@
 ## Project Overview
 A Django web application that generates personalized fitness and nutrition plans using Google's Gemini AI. Users input their health metrics and preferences, and the app creates customized diet and exercise routines through AI integration.
 
+## Link to Deployed Website
+
+https://shubhammandal0001.pythonanywhere.com/
+
 ## Features Implemented
 - ✅ User input form for personal health data
 - ✅ Food preference selection (Indian, American, Mexican, etc.)
